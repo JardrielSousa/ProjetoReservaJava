@@ -35,9 +35,18 @@ public class Reserva {
 		long diff =  checkout.getTime() - checkin.getTime() ;
 		return TimeUnit.DAYS.convert(diff, TimeUnit.DAYS.MILLISECONDS);
 	}
-	public void updateDates(Date CheckIn ,Date CheckOut) {
-		this.checkin = CheckIn;
-		this.checkout = CheckOut;
+	public String updateDates(Date checkIn ,Date checkOut) {
+		Date now = new Date();
+		if(checkIn.before(now) || checkOut.before(now) ) {
+			return "Erro na Reserva : Preencha com datas futuras";
+		}else if(!checkOut.after(checkIn)) {
+			return "Erro na Reserva : Data de checkIn não pode ser menor que a de checkOut";
+		}else {
+			
+		this.checkin = checkIn;
+		this.checkout = checkOut;
+		}
+		return null;
 	}
 	
 	public static SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
